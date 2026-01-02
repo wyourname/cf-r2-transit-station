@@ -8,7 +8,7 @@
 	],
 	/* 
 	 * 注意：R2 和 KV 的绑定已从配置文件中移除，以支持 GitHub 集成的一键部署。
-	 * 请务必在 Cloudflare Dashboard 的 Settings -> Variables 中手动添加以下绑定：
+	 * 请务必在 Cloudflare Dashboard 的 绑定 中手动添加以下绑定：
 	 * 
 	 * 1. KV Namespace:
 	 *    - Variable name: KV

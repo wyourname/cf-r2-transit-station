@@ -71,6 +71,10 @@
 *   **接口**: `GET /share/<token>`
 *   **Headers**: `X-Share-Password` (如果设置了密码)。
 
+#### 删除文件 (无需鉴权)
+*   **接口**: `DELETE /niupanel/file/<token>`
+*   **说明**: 只要知道 Token 即可删除文件。
+
 ### 2. 管理员接口 (Admin API)
 
 所有管理员接口需携带 Header: `X-Admin-Auth: <你的ADMIN_PASSWORD>`。
@@ -78,7 +82,23 @@
 #### 列出文件
 *   **接口**: `GET /admin/files`
 *   **参数**: `cursor` (分页), `limit` (默认 50)。
-*   **响应**: 返回文件列表及元数据。
+*   **响应**:
+    ```json
+    {
+      "files": [
+        {
+          "token": "example",
+          "fileKey": "example.npack",
+          "size": 1024,
+          "downloadsRemaining": -1,
+          "deleteOnDownload": false,
+          "expiresAt": 1735800000000,
+          "password": "optional_pass"
+        }
+      ],
+      "cursor": "next_page_cursor_or_null"
+    }
+    ```
 
 #### 获取存储统计
 *   **接口**: `GET /admin/stats`
@@ -94,6 +114,18 @@
 
 #### 获取文件详情
 *   **接口**: `GET /admin/files/<token>`
+*   **响应**:
+    ```json
+    {
+      "token": "example",
+      "fileKey": "example.npack",
+      "size": 1024,
+      "downloadsRemaining": -1,
+      "deleteOnDownload": false,
+      "expiresAt": 1735800000000,
+      "password": "optional_pass"
+    }
+    ```
 
 #### 管理员上传
 *   **接口**: `POST /admin/files`
@@ -101,6 +133,7 @@
 
 #### 更新文件元数据
 *   **接口**: `PATCH /admin/files/<token>` (或 `PUT`)
+*   **说明**: 仅用于更新文件属性（过期时间、下载限制等）。
 *   **Body** (JSON):
     ```json
     {
@@ -110,6 +143,8 @@
       "password": "newpassword"
     }
     ```
+
+> **提示**: 如果需要更新**文件内容本身**，请直接调用 **管理员上传接口** 并使用相同的 `token`，系统会自动覆盖原有文件及元数据。
 
 #### 删除文件
 *   **接口**: `DELETE /admin/files/<token>`
