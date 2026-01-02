@@ -1,6 +1,6 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "cf-r2-transit-station",
+	"name": "cf-r2-transit-station-github",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-12-13",
 	"compatibility_flags": [
@@ -23,10 +23,10 @@
 			"0 * * * *"
 		]
 	},
-	"vars": {
-		// 建议在 Dashboard 中覆盖此变量以提高安全性
-		"ADMIN_PASSWORD": "changeme123"
-	},
+	// "vars": {
+	// 	// 建议在 Dashboard 中覆盖此变量以提高安全性
+	// 	"ADMIN_PASSWORD": "changeme123"
+	// },
 	"observability": {
 		"enabled": true
 	}

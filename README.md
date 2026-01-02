@@ -39,7 +39,7 @@
 ### 第三步：配置资源绑定 (关键)
 部署完成后，Worker 此时还无法工作，需要将第一步创建的资源绑定到该 Worker：
 
-1.  进入你刚才创建的 Worker 详情页，点击 **"Settings" (设置)** -> **"Variables" (变量)**。
+1.  进入你刚才创建的 Worker 详情页，点击 **"绑定" (设置)** ->。
 2.  **KV Namespace Bindings**: 点击 "Add binding"。
     *   Variable name: `KV`
     *   KV Namespace: 选择 `TRANSIT_KV`。
