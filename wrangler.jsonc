@@ -1,0 +1,32 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "cf-r2-transit-station",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-12-13",
+	"compatibility_flags": [
+		"global_fetch_strictly_public"
+	],
+	"r2_buckets": [
+		{
+			"binding": "BUCKET",
+			"bucket_name": "transit-bucket"
+		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "KV",
+			"id": "YOUR_KV_NAMESPACE_ID"
+		}
+	],
+	"triggers": {
+		"crons": [
+			"0 * * * *"
+		]
+	},
+	"vars": {
+		"ADMIN_PASSWORD": "changeme123"
+	},
+	"observability": {
+		"enabled": true
+	}
+}
