@@ -6,24 +6,25 @@
 	"compatibility_flags": [
 		"global_fetch_strictly_public"
 	],
-	"r2_buckets": [
-		{
-			"binding": "BUCKET",
-			"bucket_name": "transit-bucket"
-		}
-	],
-	"kv_namespaces": [
-		{
-			"binding": "KV",
-			"id": "YOUR_KV_NAMESPACE_ID"
-		}
-	],
+	/* 
+	 * 注意：R2 和 KV 的绑定已从配置文件中移除，以支持 GitHub 集成的一键部署。
+	 * 请务必在 Cloudflare Dashboard 的 Settings -> Variables 中手动添加以下绑定：
+	 * 
+	 * 1. KV Namespace:
+	 *    - Variable name: KV
+	 *    - Namespace: 选择你的 TRANSIT_KV
+	 *
+	 * 2. R2 Bucket:
+	 *    - Variable name: BUCKET
+	 *    - Bucket: 选择你的 transit-bucket
+	 */
 	"triggers": {
 		"crons": [
 			"0 * * * *"
 		]
 	},
 	"vars": {
+		// 建议在 Dashboard 中覆盖此变量以提高安全性
 		"ADMIN_PASSWORD": "changeme123"
 	},
 	"observability": {
