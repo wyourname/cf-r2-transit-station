@@ -2,6 +2,8 @@
 
 这是一个基于 Cloudflare Workers、R2 和 KV 构建的轻量级文件中转站。支持文件上传、下载、阅后即焚、下载次数限制、自动过期清理以及全局容量控制。
 
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/wyourname/cf-r2-transit-station)
+
 现在支持完整的管理员 API，方便集成到前端面板或通过脚本管理。
 
 ## ✨ 功能特性
@@ -17,39 +19,22 @@
     *   **全局限制**: 总存储超过 9GB 时拒绝新上传。
 *   **管理功能**: 全面的 Admin API，支持列出、增删改查文件及元数据、统计容量。
 
-## 🚀 快速部署 (GitHub 集成)
+## 🚀 快速部署
 
-### 第一步：准备 Cloudflare 资源
-在部署代码前，请先创建必要的存储资源：
+### 方案一：一键部署 (推荐)
+点击上方的 **"Deploy to Cloudflare"** 按钮，按照提示：
+1.  授权连接你的 GitHub 账号。
+2.  按钮会自动为你 Fork 仓库并在 Cloudflare 中创建项目。
+3.  它会引导你创建 KV Namespace 和 R2 Bucket 并在部署时自动绑定。
 
-1.  **创建 KV Namespace**: 
-    *   进入 [Workers & Pages](https://dash.cloudflare.com/?to=/:account/workers-and-pages) -> "KV"。
-    *   点击 "Create a namespace"，命名为 `TRANSIT_KV`。
-2.  **创建 R2 Bucket**: 
-    *   进入 [R2](https://dash.cloudflare.com/?to=/:account/r2) -> "Create bucket"。
-    *   命名为 `transit-bucket`。
+### 方案二：手动 GitHub 集成部署
+如果你已经手动连接了仓库，请务必执行以下操作以防止配置被自动清除：
 
-### 第二步：Fork 与连接仓库
-1.  **Fork 本仓库**: 点击右上角的 "Fork" 按钮将此项目复制到你的 GitHub 账号。
-2.  **登录 Cloudflare Dashboard**: 进入 [Workers & Pages](https://dash.cloudflare.com/?to=/:account/workers-and-pages)。
-3.  **创建应用**: 点击 "Create application" -> "Connect to Git"。
-4.  **选择仓库**: 选择你刚刚 Fork 的 `cf-r2-transit-station` 仓库。
-5.  **配置构建**: 保持默认设置，点击 "Save and Deploy"。
-
-### 第三步：配置资源绑定 (关键)
-部署完成后，Worker 此时还无法工作，需要将第一步创建的资源绑定到该 Worker：
-
-1.  进入你刚才创建的 Worker 详情页，点击 **"绑定" (设置)** ->。
-2.  **KV Namespace Bindings**: 点击 "Add binding"。
-    *   Variable name: `KV`
-    *   KV Namespace: 选择 `TRANSIT_KV`。
-3.  **R2 Bucket Bindings**: 点击 "Add binding"。
-    *   Variable name: `BUCKET`
-    *   R2 Bucket: 选择 `transit-bucket`。
-4.  **Environment Variables**: 点击 "Add variable"。
-    *   Variable name: `ADMIN_PASSWORD`
-    *   Value: 设置你的管理员密码。
-5.  **重新部署**: 绑定完成后，转到 **"Deployments"** 标签页，点击最新的一次部署旁边的三个点，选择 **"Retry deployment"**（或者随便修改下代码提交一次 GitHub 触发自动更新）。
+1.  **准备资源**: 创建好 KV Namespace (`TRANSIT_KV`) 和 R2 Bucket (`transit-bucket`)。
+2.  **修改代码**: 在你 Fork 的 GitHub 仓库中，编辑 `wrangler.jsonc` 文件：
+    *   填入你真实的 `kv_namespaces` 的 `id`。
+    *   填入你真实的 `r2_buckets` 的 `bucket_name`。
+3.  **保存提交**: 提交代码后，Cloudflare 会自动完成部署，且以后不会再清空你的配置。
 
 ## 🛠 API 使用说明
 
