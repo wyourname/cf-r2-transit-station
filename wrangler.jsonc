@@ -6,18 +6,6 @@
 	"compatibility_flags": [
 		"global_fetch_strictly_public"
 	],
-	/* 
-	 * 注意：R2 和 KV 的绑定已从配置文件中移除，以支持 GitHub 集成的一键部署。
-	 * 请务必在 Cloudflare Dashboard 的 绑定 中手动添加以下绑定：
-	 * 
-	 * 1. KV Namespace:
-	 *    - Variable name: KV
-	 *    - Namespace: 选择你的 TRANSIT_KV
-	 *
-	 * 2. R2 Bucket:
-	 *    - Variable name: BUCKET
-	 *    - Bucket: 选择你的 transit-bucket
-	 */
 	"triggers": {
 		"crons": [
 			"0 * * * *"

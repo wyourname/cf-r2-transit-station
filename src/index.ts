@@ -14,6 +14,7 @@ interface FileMetadata {
   deleteOnDownload: boolean;
   expiresAt: number; // Unix timestamp in milliseconds
   password?: string;
+  note?: string;
 }
 
 export default {
@@ -183,6 +184,7 @@ async function handleAdminUpdateFile(request: Request, env: Env, token: string):
         if (typeof updates.deleteOnDownload === 'boolean') metadata.deleteOnDownload = updates.deleteOnDownload;
         if (typeof updates.expiresAt === 'number') metadata.expiresAt = updates.expiresAt;
         if (updates.password !== undefined) metadata.password = updates.password;
+        if (updates.note !== undefined) metadata.note = updates.note;
 
         await env.KV.put(`meta:${fileKey}`, JSON.stringify(metadata));
 
@@ -298,6 +300,7 @@ async function handleUpload(request: Request, env: Env, params: URLSearchParams)
   const maxDownloadsParam = params.get("limit");
   const expireHoursParam = params.get("expire");
   const password = params.get("password") || undefined;
+  const note = params.get("note") || undefined;
 
   let downloadsRemaining = -1;
   if (maxDownloadsParam) {
@@ -319,6 +322,7 @@ async function handleUpload(request: Request, env: Env, params: URLSearchParams)
     deleteOnDownload,
     expiresAt,
     password,
+    note,
   };
   await env.KV.put(`meta:${fileKey}`, JSON.stringify(metadata));
 

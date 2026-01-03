@@ -28,7 +28,7 @@
 3.  它会引导你创建 KV Namespace 和 R2 Bucket 并在部署时自动绑定。
 
 ### 方案二：手动 GitHub 集成部署
-如果你已经手动连接了仓库，请务必执行以下操作以防止配置被自动清除：
+如果你已经手动fork了仓库，请务必执行以下操作以防止配置被自动清除：
 
 1.  **准备资源**: 创建好 KV Namespace (`TRANSIT_KV`) 和 R2 Bucket (`transit-bucket`)。
 2.  **修改代码**: 在你 Fork 的 GitHub 仓库中，编辑 `wrangler.jsonc` 文件：
@@ -40,7 +40,7 @@
 
 所有接口的基础 URL 为你的 Worker 地址 (例如 `https://your-worker.your-subdomain.workers.dev`)。
 
-### 1. 公开接口
+### 1. 全部接口
 
 #### 上传文件
 *   **接口**: `PUT /niupanel/upload`
