@@ -11,6 +11,19 @@
 			"0 * * * *"
 		]
 	},
+	// ⚠️ 重要：为了防止部署时覆盖 Dashboard 上的绑定，请取消注释下方配置并填入真实信息
+	// "kv_namespaces": [
+	// 	{
+	// 		"binding": "KV",
+	// 		"id": "请在Dashboard查看KV的ID并填入此处"
+	// 	}
+	// ],
+	// "r2_buckets": [
+	// 	{
+	// 		"binding": "BUCKET",
+	// 		"bucket_name": "请在Dashboard查看Bucket名称并填入此处"
+	// 	}
+	// ],
 	// "vars": {
 	// 	// 建议在 Dashboard 中覆盖此变量以提高安全性
 	// 	"ADMIN_PASSWORD": "changeme123"
