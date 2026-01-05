@@ -152,6 +152,3 @@
 4.  **本地运行**: `npm run dev`
 5.  **部署**: `npm run deploy`
     *   记得使用 `npx wrangler secret put ADMIN_PASSWORD` 设置生产环境密码。
-
-## 🤝 贡献
-欢迎提交 Issue 和 Pull Request！
