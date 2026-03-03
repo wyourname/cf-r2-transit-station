@@ -23,12 +23,16 @@
 
 本项目非常容易部署！哪怕你没有任何编程经验，跟着下面的三步走：
 
-### 方案一：使用 GitHub 账号一键部署（最推荐）
+### 方案一：使用 GitHub 账号部署（最推荐）
 
-1. **点击下方按钮**（如果打不开，请挂梯子）：
+> ⚠️ **重要提醒**：在点击下方按钮前，你**必须**先去 Cloudflare 控制面板手动创建好两个免费资源，否则部署会失败！
+> 1. 去 **存储和数据库 -> R2对象存储 ->概述**：创建一个名为 `transit-bucket` 的存储桶。
+> 2. 去 **存储和数据库 -> Workers KV -> Create Instance**：创建一个名为 `TRANSIT_KV` 的命名空间。
+
+1. **准备好上面两项资源后，点击下方按钮**（如果打不开，请挂梯子）：
    [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/wyourname/cf-r2-transit-station)
 2. **授权你的 GitHub**：页面会提示让你登录 GitHub 账号，这会在你的账号下自动 Fork（复制）一份这个代码库。
-3. **一路点击“允许”和“下一步”**：Cloudflare 的自动化页面会引导你免费创建一个 **KV 数据库** 和 **R2 存储桶**。你只需要跟着它的无脑提示点击保存即可，不到一分钟你的专属文件中转站就会生成！
+3. **绑定资源并部署**：在 Cloudflare 自动弹出的项目中，你需要手动绑定  `transit-bucket` 存储桶和 `TRANSIT_KV` 绑定到本项目，最后设置机密与变量 key是`ADMIN_PASSWORD` value是你要设置的密码，并完成首次部署！
 
 ---
 

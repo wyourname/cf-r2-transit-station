@@ -369,14 +369,26 @@ async function handleDelete(env: Env, key: string): Promise<Response> {
   }
 }
 
-async function handleCleanup(env: Env) {
-  // Now relies on KV native TTL for metadata!
-  // We just need to check if there are abandoned R2 objects without valid KV metadata.
-  // This is a much lighter operation but might require tracking objects instead.
-  // Currently, relying on `ctx.waitUntil(deleteFile)` in GET and native KV TTL means
-  // orphans might exist in R2 if KV deleted it automatically.
-  // A robust cleanup would use R2 Object Lifecycles defined in wrangler.jsonc / dashboard.
-  console.log("Cleanup handled by KV expirationTtl and R2 Lifecycle Rules natively in Cloudflare.");
+async function recalibrateStorage(env: Env) {
+  let totalBytes = 0;
+  let cursor: string | undefined = undefined;
+
+  console.log("Starting daily R2 storage recalibration...");
+
+  try {
+    do {
+      const objects = await env.BUCKET.list({ cursor });
+      for (const object of objects.objects) {
+        totalBytes += object.size;
+      }
+      cursor = objects.truncated ? objects.cursor : undefined;
+    } while (cursor);
+
+    await env.KV.put("stats:total_usage", totalBytes.toString());
+    console.log(`Recalibration complete. Total R2 usage synced to KV: ${totalBytes} bytes.`);
+  } catch (error) {
+    console.error("Storage recalibration failed:", error);
+  }
 }
 
 async function deleteFile(env: Env, key: string, size: number) {
@@ -392,7 +404,7 @@ async function deleteFile(env: Env, key: string, size: number) {
 export default {
   fetch: app.fetch,
   async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
-    // Left for compatibility, but actual cleanup should be pushed to R2 Lifecycle Rules and KV TTL
-    ctx.waitUntil(handleCleanup(env));
+    // Run real-time compensation sync daily to fix any KV Race Conditions
+    ctx.waitUntil(recalibrateStorage(env));
   }
 };
