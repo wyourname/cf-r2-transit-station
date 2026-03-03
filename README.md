@@ -32,7 +32,7 @@
 1. **准备好上面两项资源后，点击下方按钮**（如果打不开，请挂梯子）：
    [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/wyourname/cf-r2-transit-station)
 2. **授权你的 GitHub**：页面会提示让你登录 GitHub 账号，这会在你的账号下自动 Fork（复制）一份这个代码库。
-3. **绑定资源并部署**：在 Cloudflare 自动弹出的项目中，绑定页面下方`cf-r2-transit-station-github +绑定`  点击R2存储桶-添加绑定-变量名称`BUCKET` 选择`transit-bucket` 存储桶 同理 `TRANSIT_KV` 也是这样操作绑定到本项目，最后设置机密与变量 key是`ADMIN_PASSWORD` value是你要设置的密码，并完成首次部署！
+3. **绑定资源并部署**：在 Cloudflare 自动弹出的项目中，绑定页面下方`cf-r2-transit-station-github +绑定`  点击R2存储桶-添加绑定-变量名称`BUCKET` 选择`transit-bucket` 存储桶 同理 `TRANSIT_KV` 变量名称是`KV` 也是这样操作绑定到本项目，最后设置机密与变量 key是`ADMIN_PASSWORD` value是你要设置的密码，并完成首次部署！
 
 ---
 
