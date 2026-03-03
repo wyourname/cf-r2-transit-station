@@ -5,6 +5,10 @@ export default defineWorkersConfig({
 		poolOptions: {
 			workers: {
 				wrangler: { configPath: './wrangler.jsonc' },
+				miniflare: {
+					kvNamespaces: ["KV"],
+					r2Buckets: ["BUCKET"]
+				}
 			},
 		},
 	},

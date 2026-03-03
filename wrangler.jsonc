@@ -26,7 +26,10 @@
 	// ],
 	// "vars": {
 	// 	// 建议在 Dashboard 中覆盖此变量以提高安全性
-	// 	"ADMIN_PASSWORD": "changeme123"
+	// 	"ADMIN_PASSWORD": "changeme123",
+	//  "MAX_STORAGE_GB": "9",
+	//  "MAX_FILE_SIZE_MB": "300",
+	//  "DEFAULT_EXPIRE_HOURS": "24"
 	// },
 	"observability": {
 		"enabled": true

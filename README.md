@@ -19,22 +19,46 @@
     *   **全局限制**: 总存储超过 9GB 时拒绝新上传。
 *   **管理功能**: 全面的 Admin API，支持列出、增删改查文件及元数据、统计容量。
 
-## 🚀 快速部署
+## 🚀 极简部署指南 (小白必看)
 
-### 方案一：一键部署 (推荐)
-点击上方的 **"Deploy to Cloudflare"** 按钮，按照提示：
-1.  授权连接你的 GitHub 账号。
-2.  按钮会自动为你 Fork 仓库并在 Cloudflare 中创建项目。
-3.  它会引导你创建 KV Namespace 和 R2 Bucket 并在部署时自动绑定。
+本项目非常容易部署！哪怕你没有任何编程经验，跟着下面的三步走：
 
-### 方案二：手动 GitHub 集成部署
-如果你已经手动fork了仓库，请务必执行以下操作以防止配置被自动清除：
+### 方案一：使用 GitHub 账号一键部署（最推荐）
 
-1.  **准备资源**: 创建好 KV Namespace (`TRANSIT_KV`) 和 R2 Bucket (`transit-bucket`)。
-2.  **修改代码**: 在你 Fork 的 GitHub 仓库中，编辑 `wrangler.jsonc` 文件：
-    *   填入你真实的 `kv_namespaces` 的 `id`。
-    *   填入你真实的 `r2_buckets` 的 `bucket_name`。
-3.  **保存提交**: 提交代码后，Cloudflare 会自动完成部署，且以后不会再清空你的配置。
+1. **点击下方按钮**（如果打不开，请挂梯子）：
+   [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/wyourname/cf-r2-transit-station)
+2. **授权你的 GitHub**：页面会提示让你登录 GitHub 账号，这会在你的账号下自动 Fork（复制）一份这个代码库。
+3. **一路点击“允许”和“下一步”**：Cloudflare 的自动化页面会引导你免费创建一个 **KV 数据库** 和 **R2 存储桶**。你只需要跟着它的无脑提示点击保存即可，不到一分钟你的专属文件中转站就会生成！
+
+---
+
+### ⚙️ 个性化设置（修改密码和容量限制）
+
+无论你怎么部署的，部署完成后，你需要进入 **Cloudflare 控制台 (Dash)** 去修改你的专属密码和限制：
+
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)。
+2. 在左侧菜单点击 **Workers 和 Pages**，找到你刚刚部署的项目（名字通常带有 `transit-station`）。
+3. 点击进入项目 -> 选择上方的 **设置 (Settings)** -> 选择侧边的 **变量和机密 (Variables and Secrets)**。
+4. 在 **明文变量 (Plain text vars)** 这里，点击 **添加**。你可以随意添加以下配置来定制你的中转站（没添加的就用默认值）：
+
+| 变量名称 | 默认值 | 说明 |
+| :--- | :--- | :--- |
+| `ADMIN_PASSWORD` | *(必填)* | **你的超级管理员密码**。前端面板和管理员 API 都要用它。 |
+| `MAX_STORAGE_GB` | `9` | 中转站的全局最大容量（默认9GB，白嫖额度最高10G）。 |
+| `MAX_FILE_SIZE_MB` | `300` | 允许单次上传的**最大单个文件**大小（兆）。 |
+| `DEFAULT_EXPIRE_HOURS` | `24` | 别人上传文件后，默认保留多少小时后自动删除。 |
+
+**修改完成后，记得点击右上角的 "部署 (Deploy)" 让新设置生效哦！**
+
+---
+
+### 方案二：如果你是手动部署的开发者
+
+如果你已经手动 Fork 到了本地并打算用 `Wrangler CLI`：
+
+1. **准备资源**: 使用命令创建 `npx wrangler kv namespace create TRANSIT_KV` 和 `npx wrangler r2 bucket create transit-bucket` 并在 `wrangler.jsonc` 中填入你的 ID。
+2. **修改代码**: 在 `wrangler.jsonc` 底部，找到 `// "vars"` 注释将其打开，并填入你需要的 `ADMIN_PASSWORD` 以及其他限制配置。
+3. **提交运行**: `npm run deploy` 一键上线！
 
 ## 🛠 API 使用说明
 
